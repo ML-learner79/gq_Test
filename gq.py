@@ -15,7 +15,7 @@ gorq_api_key = st.secrets.get("GROQ_API_KEY")
 uploaded_file = st.file_uploader("Upload an image of a crop:", type=["jpg", "jpeg", "png"])
 
 # --- Optional prompt input ---
-user_prompt = st.text_input("Ask something about the image (optional):", value="What's in this image?")
+user_prompt = st.text_input("Ask something about the image (optional):", value="What is the fruit crop type in the image/")
 
 
 model_options = {
@@ -41,7 +41,7 @@ if st.button("🔍 Identify Crop") and uploaded_file and gorq_api_key:
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a crop identification expert. Based on the image provided, identify the crop and respond in JSON: {croptype: fruit}"
+                        "content": "You are a crop identification expert. Based on the image provided, identify the crop and respond in JSON: {croptype: fruit}. if use ask to count the fruit you provide the court too"
                     },
                     {
                         "role": "user",
