@@ -26,9 +26,6 @@ selected_model_name = st.selectbox("Choose LLaMA model:", list(model_options.key
 selected_model = model_options[selected_model_name]
 
 
-# --- Show image ---
-if uploaded_file:
-    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
 
 # --- Process when button is clicked ---
 if st.button("🔍 Identify Crop") and uploaded_file and gorq_api_key:
@@ -69,5 +66,9 @@ if st.button("🔍 Identify Crop") and uploaded_file and gorq_api_key:
         except Exception as e:
             st.error(f"❌ Failed to get response from Groq API: {e}")
 
+# --- Show image ---
+if uploaded_file:
+    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
+
 # Optional note
-st.caption("Powered by [Groq](https://console.groq.com) + Meta's LLaMA 4 Scout model.")
+st.caption("Powered by [Groq](https://console.groq.com) + Meta's LLaMA 4.")
