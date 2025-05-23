@@ -17,6 +17,15 @@ uploaded_file = st.file_uploader("Upload an image of a crop:", type=["jpg", "jpe
 # --- Optional prompt input ---
 user_prompt = st.text_input("Ask something about the image (optional):", value="What's in this image?")
 
+
+model_options = {
+    "LLaMA 4 Scout (default)": "meta-llama/llama-4-scout-17b-16e-instruct",
+    "LLaMA 4 maverick": "meta-llama/llama-4-maverick-17b-128e-instruct"
+}
+selected_model_name = st.selectbox("Choose LLaMA model:", list(model_options.keys()))
+selected_model = model_options[selected_model_name]
+
+
 # --- Show image ---
 if uploaded_file:
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
@@ -50,7 +59,7 @@ if st.button("🔍 Identify Crop") and uploaded_file and gorq_api_key:
                         ],
                     }
                 ],
-                model="meta-llama/llama-4-scout-17b-16e-instruct",
+                model=selected_model,
             )
 
             result = chat_completion.choices[0].message.content
