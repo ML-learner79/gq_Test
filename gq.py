@@ -9,8 +9,8 @@ st.title("🌿 Crop Identifier using Groq & LLaMA 4")
 st.markdown("Upload an image and identify the crop using a multimodal model.")
 
 # --- API key (optional field or use env var) ---
-#gorq_api_key = st.secrets.get("GROQ_API_KEY") or st.text_input("Enter your Groq API Key", type="password")
-gorq_api_key='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'
+gorq_api_key = st.secrets.get("GROQ_API_KEY")
+
 # --- Upload image ---
 uploaded_file = st.file_uploader("Upload an image of a crop:", type=["jpg", "jpeg", "png"])
 
