@@ -68,7 +68,7 @@ if st.button("🔍 Identify Crop") and uploaded_file and gorq_api_key:
 
 # --- Show image ---
 if uploaded_file:
-    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
+    st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
 
 # Optional note
 st.caption("Powered by [Groq](https://console.groq.com) + Meta's LLaMA 4.")
