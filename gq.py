@@ -3,6 +3,8 @@ from groq import Groq
 import base64
 import os
 import numpy as np
+from PIL import Image
+import io
 
 # --- UI: Title and uploader ---
 st.title("🌿 Crop Identifier using Groq & LLaMA 4")
@@ -17,6 +19,7 @@ uploaded_file = st.file_uploader("Upload an image of a crop:", type=["jpg", "jpe
 # --- Optional prompt input ---
 user_prompt = st.text_input("Ask something about the image (optional):", value="What is the fruit crop type in the image/")
 
+MAX_SIZE = (1000, 1000)  # Max width and height
 
 model_options = {
     "LLaMA 4 Scout (default)": "meta-llama/llama-4-scout-17b-16e-instruct",
@@ -24,13 +27,25 @@ model_options = {
 }
 selected_model_name = st.selectbox("Choose LLaMA model:", list(model_options.keys()))
 selected_model = model_options[selected_model_name]
+if uploaded_file:
+    # Open and resize image
+    image = Image.open(uploaded_file)
+    image.thumbnail(MAX_SIZE)
 
 
 
 # --- Process when button is clicked ---
 if st.button("🔍 Identify Crop") and uploaded_file and gorq_api_key:
+    buffered = io.BytesIO()
+    image.save(buffered, format="JPEG")
+    img_bytes = buffered.getvalue()
+
+    # Encode to base64
+    base64_image = base64.b64encode(img_bytes).decode('utf-8')
+    
     # Convert image to base64
-    base64_image = base64.b64encode(uploaded_file.read()).decode('utf-8')
+    
+    #base64_image = base64.b64encode(uploaded_file.read()).decode('utf-8')
 
     # Setup Groq client
     client = Groq(api_key=gorq_api_key)
